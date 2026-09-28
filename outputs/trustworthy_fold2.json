@@ -1,0 +1,72 @@
+{
+  "temperature": 0.4603458046913147,
+  "uncertainty_mean": 0.059996653348207474,
+  "uncertainty_std": 0.017061136662960052,
+  "ece_before": 0.05687049627304077,
+  "ece_after": 0.10936231613159175,
+  "brier_before": 0.1693901998986089,
+  "brier_after": 0.17788415575083588,
+  "selective_prediction": {
+    "0.1": 1.0,
+    "0.2": 1.0,
+    "0.30000000000000004": 1.0,
+    "0.4": 1.0,
+    "0.5": 1.0,
+    "0.6": 1.0,
+    "0.7000000000000001": 1.0,
+    "0.8": 1.0,
+    "0.9": 1.0,
+    "1.0": 0.8
+  },
+  "reliability_index_mean": 0.6778654456138611,
+  "robustness": {
+    "gaussian_noise": [
+      {
+        "level": 0.05,
+        "accuracy": 0.8,
+        "f1": 0.4444444444444444,
+        "deg_acc": 0.0
+      },
+      {
+        "level": 0.1,
+        "accuracy": 0.8,
+        "f1": 0.4444444444444444,
+        "deg_acc": 0.0
+      }
+    ],
+    "intensity": [
+      {
+        "level": 0.9,
+        "accuracy": 0.8,
+        "f1": 0.4444444444444444,
+        "deg_acc": 0.0
+      },
+      {
+        "level": 0.8,
+        "accuracy": 0.8,
+        "f1": 0.4444444444444444,
+        "deg_acc": 0.0
+      }
+    ],
+    "spatial_shift": [
+      {
+        "level": 1.0,
+        "accuracy": 0.8,
+        "f1": 0.4444444444444444,
+        "deg_acc": 0.0
+      },
+      {
+        "level": 2.0,
+        "accuracy": 0.8,
+        "f1": 0.4444444444444444,
+        "deg_acc": 0.0
+      }
+    ]
+  },
+  "active_tasks": {
+    "diagnosis": true,
+    "staging": false,
+    "progression": false,
+    "risk": false
+  }
+}

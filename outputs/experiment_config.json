@@ -1,0 +1,82 @@
+{
+  "image_size": [
+    48,
+    48,
+    48
+  ],
+  "batch_size": 2,
+  "epochs": 12,
+  "patience": 5,
+  "resnet_base": 16,
+  "resnet_layers": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "densenet_growth": 12,
+  "densenet_layers": [
+    3,
+    4,
+    6,
+    4
+  ],
+  "fusion_dim": 128,
+  "shared_fc": [
+    128,
+    64
+  ],
+  "preset": "colab_cpu",
+  "task_setup": "cn_vs_ad",
+  "experiment": "TXAI_reference_pipeline",
+  "seed": 42,
+  "lr": 0.0001,
+  "weight_decay": 0.0001,
+  "dropout": 0.5,
+  "fusion_heads": 8,
+  "outer_folds_max": 5,
+  "val_frac_of_dev": 0.125,
+  "clinical_mlp": [
+    256,
+    128
+  ],
+  "biomarker_mlp": [
+    128,
+    64
+  ],
+  "demographic_mlp": [
+    64,
+    32
+  ],
+  "lambda_diag": 1.0,
+  "lambda_stage": 1.0,
+  "lambda_prog": 0.5,
+  "lambda_risk": 0.3,
+  "mc_dropout_passes": 20,
+  "ece_bins": 15,
+  "ig_steps": 16,
+  "xai_max_samples": 10,
+  "shap_background": 20,
+  "shap_explain": 5,
+  "xavier_init": true,
+  "output_dir": "/content/txai_trustworthy_outputs/cn_vs_ad_colab_cpu",
+  "n_diag_classes": 2,
+  "n_stage_classes": 4,
+  "outer_folds": 3,
+  "device": "cpu",
+  "active_modalities": [
+    "mri",
+    "clinical",
+    "demographic"
+  ],
+  "active_tasks": {
+    "diagnosis": true,
+    "staging": false,
+    "progression": false,
+    "risk": false
+  },
+  "diag_labels": [
+    0,
+    1
+  ]
+}

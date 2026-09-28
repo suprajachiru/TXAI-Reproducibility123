@@ -1,0 +1,25 @@
+{
+  "task_setup": "cn_vs_ad",
+  "n_patients": 16,
+  "diag_accuracy": 0.8125,
+  "diag_precision": 0.40625,
+  "diag_recall": 0.5,
+  "diag_f1": 0.4482758620689655,
+  "diag_auc": 0.4615384615384615,
+  "confusion": [
+    [
+      13,
+      0
+    ],
+    [
+      3,
+      0
+    ]
+  ],
+  "active_tasks": {
+    "diagnosis": true,
+    "staging": false,
+    "progression": false,
+    "risk": false
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "alpha_mean": [
+    0.4136773645877838,
+    0.0,
+    0.2933323383331299,
+    0.0,
+    0.2929903268814087
+  ],
+  "alpha_std": [
+    0.035363465547561646,
+    0.0,
+    0.017698131501674652,
+    0.0,
+    0.01767193339765072
+  ],
+  "attention_consistency": {
+    "0": 0.9622789025306702
+  },
+  "ig_mean": 1.1935850722011309e-06,
+  "gradcam_mean": NaN,
+  "n_samples": 5,
+  "shap": {
+    "feature_names": [
+      "clinical.MMSE",
+      "clinical.ADAS_Cog",
+      "biomarker.AB42",
+      "biomarker.T_tau",
+      "biomarker.P_tau",
+      "biomarker.APOE",
+      "demographic.age",
+      "demographic.sex",
+      "demographic.education"
+    ],
+    "mean_abs_shap": [
+      0.0017394696821837045,
+      0.002878198059273627
+    ],
+    "ranking": [
+      {
+        "feature": "clinical.ADAS_Cog",
+        "mean_abs_shap": 0.002878198059273627
+      },
+      {
+        "feature": "clinical.MMSE",
+        "mean_abs_shap": 0.0017394696821837045
+      }
+    ],
+    "n_explained": 5,
+    "n_background": 5
+  },
+  "active_tasks": {
+    "diagnosis": true,
+    "staging": false,
+    "progression": false,
+    "risk": false
+  }
+}
