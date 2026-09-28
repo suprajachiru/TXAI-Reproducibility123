@@ -91,25 +91,41 @@ print("=" * 70)
 
 
 # ============================================================
-# 2. Data access and OASIS-1 extraction
+# 2. Data access and OASIS-1 automatic download/extraction
 # ============================================================
-from google.colab import drive
-drive.mount('/content/drive')
 
-OASIS_ARCHIVE = "/content/drive/MyDrive/oasis_cross-sectional_disc1.tar.gz"
+OASIS_URL = "https://download.nrg.wustl.edu/data/oasis_cross-sectional_disc1.tar.gz"
+OASIS_ARCHIVE = "/content/oasis_cross-sectional_disc1.tar.gz"
 DEST = "/content/oasis_data"
+
 os.makedirs(DEST, exist_ok=True)
 
+# Automatically download OASIS-1 when it is not already present.
+if not os.path.exists(OASIS_ARCHIVE):
+    print("=" * 70)
+    print("Downloading OASIS-1 dataset...")
+    print(f"Source: {OASIS_URL}")
+    print("=" * 70)
+
+    import urllib.request
+    urllib.request.urlretrieve(OASIS_URL, OASIS_ARCHIVE)
+
+    print("OASIS-1 download completed.")
+else:
+    print("OASIS-1 archive already exists. Skipping download.")
+
+# Automatically extract OASIS-1.
 if not os.path.isdir(os.path.join(DEST, "disc1")):
-    print(f"Extracting {OASIS_ARCHIVE} -> {DEST} ...")
-    if OASIS_ARCHIVE.endswith(".zip"):
-        with zipfile.ZipFile(OASIS_ARCHIVE) as z:
-            z.extractall(DEST)
-    elif OASIS_ARCHIVE.endswith((".tar.gz", ".tgz", ".tar")):
-        with tarfile.open(OASIS_ARCHIVE) as t:
-            t.extractall(DEST)
-    else:
-        raise ValueError("Unsupported archive format")
+    print("=" * 70)
+    print("Extracting OASIS-1 dataset...")
+    print("=" * 70)
+
+    with tarfile.open(OASIS_ARCHIVE, "r:gz") as t:
+        t.extractall(DEST)
+
+    print("OASIS-1 extraction completed.")
+else:
+    print("OASIS-1 dataset is already extracted.")
 
 ROOT = os.path.join(DEST, "disc1")
 if not os.path.isdir(ROOT):
@@ -119,6 +135,16 @@ if not os.path.isdir(ROOT):
     else:
         raise RuntimeError(f"disc1 not found under {DEST}")
 print("OASIS root:", ROOT)
+
+participant_count = sum(
+    1 for d in os.listdir(ROOT)
+    if d.startswith("OAS1_") and os.path.isdir(os.path.join(ROOT, d))
+)
+if participant_count == 0:
+    raise RuntimeError(
+        "OASIS extraction completed, but no OAS1_* participant directories were found."
+    )
+print(f"OASIS participants discovered: {participant_count}")
 
 
 # ============================================================
@@ -634,6 +660,21 @@ def count_params(m):
     return sum(p.numel() for p in m.parameters() if p.requires_grad)
 
 
+def component_param_counts(model):
+    """Trainable parameter count for each major TXAI component."""
+    names = [
+        "mri_enc", "pet_enc", "cli_enc", "bio_enc", "dem_enc",
+        "fusion", "shared", "head_diag", "head_stage", "head_prog", "head_risk"
+    ]
+    result = {}
+    for name in names:
+        module = getattr(model, name, None)
+        if module is not None:
+            result[name] = count_params(module)
+    result["total"] = count_params(model)
+    return result
+
+
 # ============================================================
 # 6. Losses, metrics, and training utilities
 # ============================================================
@@ -1060,6 +1101,9 @@ def main():
     probe = TXAI()
     actual = count_params(probe)
     print(f"\nModel trainable parameters: {actual / 1e6:.3f} M")
+    print("Component-wise trainable parameter count:")
+    for name, n in component_param_counts(probe).items():
+        print(f"  {name:12s}: {n:,} ({n / 1e6:.3f} M)")
     del probe
 
     folds, pid_df = make_folds(df_base, CFG["outer_folds"], CFG["seed"])
